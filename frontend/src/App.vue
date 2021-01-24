@@ -1,11 +1,39 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </div>
-  <router-view />
+  <Nav :user="user" @userLogin="getUser" />
+  <router-view @userLogin="getUser" :user="user"></router-view>
 </template>
 
+<script>
+import Nav from "@/components/Nav";
+export default {
+  name: "Home",
+  data() {
+    return {
+      user: {},
+    };
+  },
+  components: {
+    Nav,
+  },
+  methods: {
+    //quand login emit user
+    getUser(dataUser) {
+      //user est envoyé au router-view et à nav
+      this.user = dataUser;
+      // on memorise le user dans local storage
+      localStorage.setItem("user", JSON.stringify(dataUser));
+    },
+  },
+  created: function() {
+    // si on reload la page on prend le user ds localStorage
+    if (!this.user.id) {
+      if (localStorage.getItem("user") != null) {
+        this.user = JSON.parse(localStorage.user);
+      }
+    }
+  },
+};
+</script>
 <style lang="scss">
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;

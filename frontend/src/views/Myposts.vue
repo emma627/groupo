@@ -7,14 +7,8 @@
         <i class="fas fa-plus"></i> Ajouter un post
       </router-link>
     </header>
-    <div class="row">
-      <Post
-        v-for="post in posts"
-        :key="post.id"
-        :post="post"
-        :user="user"
-        @updatePost="getUpdatedPost" 
-      />
+    <div class="row" v-for="post in tabPost" :key="post.id">
+      <Post :post="post" :user="user" @updatePost="getPost"/>
     </div>
   </div>
 </template>
@@ -29,34 +23,29 @@ export default {
   },
   data() {
     return {
-      posts: [],
+      tabPost: [],
+    id:this.$route.params.id
     };
   },
   methods: {
-    getUpdatedPost() {
+    getPost() {
       this.posts = [];
       this.loadPost();
     },
     loadPost() {
-      fetch("http://localhost:3000/posts", {
-        headers: {
-          Authorization: "Bearer " + this.user.token,
-
-          "Content-Type": "application/json",
-        },
+       var vm = this;
+    fetch("http://localhost:3000/posts/user/"+this.id)
+      .then(function(response) {
+        return response.json();
       })
-        .then((response) => {
-          console.log(response);
-          return response.json();
-        })
-        .then((data) => {
-          this.posts = data;
-          console.log(data);
-        });
-    },
+      .then(function(data) {
+        vm.tabPost = data;
+        console.log(data);
+      });
+    }
   },
   created: function() {
-    this.loadPost();
+   this.loadPost();
   },
 };
 </script>

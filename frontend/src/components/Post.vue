@@ -41,7 +41,7 @@
         <div class="row">
           <div class="col-6 text-left">
             <button
-              @click="delPost"
+              @click="deletePost"
               class="btn btn-danger"
               aria-labelledby="effacer"
             >
@@ -84,7 +84,7 @@
             <!--pouvoir delete son propre comment étant l'author du comment ou admin-->
             <button
               v-if="user.id == comment.user.id || user.admin"
-              @click="delComment(comment.id)"
+              @click="deleteComment(comment.id)"
               class="btn btn-danger"
             >
               <i class="fas fa-trash"></i>
@@ -166,7 +166,8 @@ export default {
     getCleanDate(date2) {
       return myDate.dateFormat(date2);
     },
-    delPost() {
+
+    deletePost() {
       let test = confirm("Voulez vous vraiment supprimer ce post?");
 
       if (test) {
@@ -185,6 +186,29 @@ export default {
           });
       }
     },
+
+    deleteComment(id) {
+      let test = confirm("Voulez vous vraiment supprimer ce commentaire?");
+
+      if (test) {
+        fetch("http://localhost:3000/comments/" + id, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+          .then((response) => {
+            return response.json();
+          })
+          .then(() => {
+            this.$emit("updatePost");
+          })
+          .catch(function(error) {
+            console.error(error);
+          });
+      }
+    },
+
     addComment() {
       let comment = {
         postId: this.post.id,
@@ -209,28 +233,6 @@ export default {
         .catch(function(error) {
           console.error(error);
         });
-    },
-
-    delComment(id) {
-      let test = confirm("Voulez vous vraiment supprimer ce commentaire?");
-
-      if (test) {
-        fetch("http://localhost:3000/comments/" + id, {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        })
-          .then((response) => {
-            return response.json();
-          })
-          .then(() => {
-            this.$emit("updatePost");
-          })
-          .catch(function(error) {
-            console.error(error);
-          });
-      }
     },
   },
 };

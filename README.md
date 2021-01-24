@@ -10,7 +10,7 @@ Sur MySQL, Créez une base de donnée nommée groupo2 encodé en utf8mb4.
 npm install
 
 3. Démarrage serveur backend localhost:3000
-node server
+nodemon
 
 Installation et configuration du Frontend
 1. Node Modules

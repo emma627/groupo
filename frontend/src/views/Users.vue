@@ -4,7 +4,7 @@
       <h1 class="mt-3">Les Utilisateurs</h1>
       <table class="table table-striped">
         <tbody>
-          <tr v-for="(user, index) in tabUser" :key="user.id">
+          <tr v-for="(user, index) in users" :key="user.id">
             <td v-if="user.img"><img :src="user.img" width="50" /></td>
             <td v-else>
               <img
@@ -12,8 +12,11 @@
                 width="50"
               />
             </td>
-            <td class="text-left">{{ user.nom }} {{ user.prenom }}
-              <cite class="blockquote-footer">{{ getCleanDate(user.createdAt) }}</cite>
+            <td class="text-left">
+              {{ user.prenom }} {{ user.nom }}
+              <cite class="blockquote-footer">
+                {{ getCleanDate(user.createdAt) }}</cite
+              >
             </td>
             <td>
               <router-link
@@ -32,7 +35,7 @@
             </td>
             <td>
               <button
-                @click="deleteUser(user.id,index)"
+                @click="deleteUser(user.id, index)"
                 class="btn btn-danger text-white"
               >
                 <i class="fas fa-trash"></i>
@@ -42,10 +45,7 @@
         </tbody>
       </table>
     </div>
- 
   </div>
-
-  
 </template>
 
 <script>
@@ -55,41 +55,39 @@ export default {
 
   data() {
     return {
-      tabUser: [],
+      users: [],
     };
   },
   created: function() {
-    var vm = this;
     fetch("http://localhost:3000/users")
-      .then(function(response) {
+      .then((response) => {
         return response.json();
       })
-      .then(function(data) {
-        vm.tabUser = data;
+      .then((data) => {
+        this.users = data;
         console.log(data);
       });
   },
   methods: {
-      getCleanDate(date2){
+    getCleanDate(date2) {
       return myDate.dateFormat(date2);
     },
-    deleteUser(id,index) {
-      let test = confirm("Voulez vous vraiment supprimer ?");
-      let vm=this;
+    deleteUser(id, index) {
+      let test = confirm("Voulez-vous vraiment supprimer ?");
+
       if (test) {
-       
         fetch("http://localhost:3000/users/" + id, {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
           },
         })
-          .then(function(response) {
+          .then((response) => {
             console.log(response);
             console.log(index);
-            vm.tabUser.splice(index,1);
+            this.users.splice(index, 1);
           })
-          .catch(function(error) {
+          .catch((error) => {
             console.error(error);
           });
       }

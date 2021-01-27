@@ -1,12 +1,12 @@
 <template>
-  <Nav :user="user" @userLogin="getUser" />
+  <Nav :user="user" @userLogout="getUser" />
   <router-view @userLogin="getUser" :user="user"></router-view>
 </template>
 
 <script>
 import Nav from "@/components/Nav";
 export default {
-  name: "Home",
+  name: "Main",
   data() {
     return {
       user: {},

@@ -2,7 +2,11 @@
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
     <div class="container">
       <router-link to="/" class="navbar-brand">
-        <img src="@/assets/img/logo-groupomania.png" width="200" alt="logoGroupomania"/>
+        <img
+          src="@/assets/img/logo-groupomania.png"
+          width="200"
+          alt="logoGroupomania"
+        />
       </router-link>
       <button
         class="navbar-toggler"
@@ -74,13 +78,13 @@
 <script>
 export default {
   name: "Nav",
-  props: ["menu", "user"],
-  computed: {},
+  props: ["user"],
+
   methods: {
     logout() {
-      this.$emit("userLogin", {});
-      // on efface le user ds localStorage
-      localStorage.clear();
+      //emit de user vide
+      this.$emit("userLogout", {});
+
       this.$router.push({ name: "Login" });
     },
   },

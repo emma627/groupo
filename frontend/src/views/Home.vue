@@ -13,7 +13,7 @@
         :key="post.id"
         :post="post"
         :user="user"
-        @updatePost="getUpdatedPost" 
+        @updatePost="getUpdatedPost"
       />
     </div>
   </div>

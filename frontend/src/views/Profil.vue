@@ -36,7 +36,7 @@
         <button class="btn btn-primary text-white" @click="editUser">
           <i class="fas fa-edit"></i> Modifier
         </button>
-        
+
         <button @click="deleteUser()" class="ml-2 btn btn-danger text-white">
           <i class="fas fa-trash"></i> Supprimer mon compte
         </button>
@@ -70,26 +70,22 @@ export default {
   },
   methods: {
     loadProfil() {
-      var vm = this;
       fetch("http://localhost:3000/users/" + this.id)
-        .then(function(response) {
+        .then((response) => {
           return response.json();
         })
-        .then(function(data) {
+        .then((data) => {
           console.log(data);
-          vm.nom = data.nom;
-          vm.prenom = data.prenom;
-          vm.email = data.email;
-          vm.img = data.img;
+          this.nom = data.nom;
+          this.prenom = data.prenom;
+          this.email = data.email;
+          this.img = data.img;
         })
-        .catch(function(error) {
+        .catch((error) => {
           console.error(error);
         });
-      // const route =useRoute();
     },
     editUser() {
-      //
-      let route = this.$router;
       let user = {
         nom: this.nom,
         prenom: this.prenom,
@@ -105,17 +101,17 @@ export default {
         },
         body: JSON.stringify(user),
       })
-        .then(function(response) {
+        .then((response) => {
           console.log(response);
-          route.push("/home");
+          this.$route.push("/home");
         })
-        .catch(function(error) {
+        .catch((error) => {
           console.error(error);
         });
     },
     deleteUser() {
       let test = confirm("Voulez vous vraiment supprimer ?");
-      let vm = this;
+
       if (test) {
         fetch("http://localhost:3000/users/" + this.id, {
           method: "DELETE",
@@ -123,14 +119,13 @@ export default {
             "Content-Type": "application/json",
           },
         })
-          .then(function(response) {
-            console.log(response);
-            vm.$emit("userLogin", {});
-            // on efface le user ds localStorage
-            localStorage.clear();
-            vm.$router.push({ name: "Login" });
+          .then(() => {
+            //emit de user vide
+            this.$emit("userLogin", {});
+
+            this.$router.push({ name: "Login" });
           })
-          .catch(function(error) {
+          .catch((error) => {
             console.error(error);
           });
       }

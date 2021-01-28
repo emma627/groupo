@@ -103,7 +103,7 @@ export default {
       })
         .then((response) => {
           console.log(response);
-          this.$route.push("/home");
+          this.$router.push("/home");
         })
         .catch((error) => {
           console.error(error);

@@ -33,13 +33,13 @@ export default {
       this.loadPost();
     },
     loadPost() {
-       var vm = this;
+      
     fetch("http://localhost:3000/posts/user/"+this.id)
-      .then(function(response) {
+      .then((response) =>{
         return response.json();
       })
-      .then(function(data) {
-        vm.tabPost = data;
+      .then((data) =>{
+        this.tabPost = data;
         console.log(data);
       });
     }

@@ -18,4 +18,21 @@ npm install
 
 2. Démarrage server frontend localhost:8080
 npm run serve
+----------------------------------------------------------------------------------------------------------------------------------------------------
+P7groupomania Social network
 
+Functionality similar to REDDIT: creation of messages, possibility to comment. Functionality similar to 9GAG: posting of gifs, images.
+
+-Installation and configuration of the Backend
+
+Creation of the database On MySQL, Create a database named groupo2 encoded in utf8mb4.
+
+Node Modules npm install
+
+Localhost backend server start: 3000 nodemon
+
+-Installation and configuration of the Frontend
+
+Node Modules npm install
+
+Starting server frontend localhost: 8080 npm run serve
